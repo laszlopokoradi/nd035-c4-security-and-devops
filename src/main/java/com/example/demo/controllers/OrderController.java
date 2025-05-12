@@ -21,7 +21,7 @@ public class OrderController {
         this.orderRepository = orderRepository;
     }
 
-    @PostMapping("/submit ")
+    @PostMapping("/submit")
     public ResponseEntity<UserOrder> submit(Authentication authentication) {
         if (authentication == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

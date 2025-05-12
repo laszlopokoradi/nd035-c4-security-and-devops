@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 
 import java.math.*;
 import java.util.*;
-import java.util.stream.*;
 
 
 @Entity
@@ -67,9 +66,7 @@ public class UserOrder {
 
     public static UserOrder createFromCart(Cart cart) {
         UserOrder order = new UserOrder();
-        order.setItems(cart.getItems()
-                           .stream()
-                           .collect(Collectors.toList()));
+        order.setItems(new ArrayList<>(cart.getItems()));
         order.setTotal(cart.getTotal());
         order.setUser(cart.getUser());
         return order;

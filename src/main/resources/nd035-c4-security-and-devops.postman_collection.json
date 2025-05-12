@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "bcb97af2-b4e2-49ee-8940-a08f72e38598",
+		"_postman_id": "cd1e1f2d-cc4c-478c-b1f0-34f03a8798b4",
 		"name": "nd035-c4-security-and-devops",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "7647968"
@@ -39,10 +39,16 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearerToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"itemId\": 1,\r\n    \"quantity\": 1\r\n}",
+							"raw": "{\r\n    \"itemId\": 1,\r\n    \"quantity\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -94,7 +100,13 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearerToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"itemId\": 1,\r\n    \"quantity\": 1\r\n}",
@@ -123,7 +135,87 @@
 		},
 		{
 			"name": "Item",
-			"item": []
+			"item": [
+				{
+					"name": "Get items",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearerToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/item/",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"item",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get item by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearerToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/item/1",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"item",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get item by name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearerToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/item/name/Square+Widget",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"item",
+								"name",
+								"Square+Widget"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Order",
@@ -158,9 +250,15 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearerToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{host}}:{{port}}/api/order/submit/{{username}}",
+							"raw": "{{host}}:{{port}}/api/order/submit",
 							"host": [
 								"{{host}}"
 							],
@@ -168,8 +266,7 @@
 							"path": [
 								"api",
 								"order",
-								"submit",
-								"{{username}}"
+								"submit"
 							]
 						}
 					},
@@ -209,9 +306,15 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearerToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{host}}:{{port}}/api/order/history/{{username}}",
+							"raw": "{{host}}:{{port}}/api/order/history",
 							"host": [
 								"{{host}}"
 							],
@@ -219,8 +322,7 @@
 							"path": [
 								"api",
 								"order",
-								"history",
-								"{{username}}"
+								"history"
 							]
 						}
 					},
@@ -275,7 +377,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"test1Password\"\r\n}",
+							"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"test1Password\",\r\n    \"repeatedPassword\": \"test1Password\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -384,7 +486,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearerToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}:{{port}}/api/user/{{username}}",
 							"host": [

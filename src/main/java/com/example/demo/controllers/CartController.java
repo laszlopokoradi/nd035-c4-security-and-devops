@@ -24,7 +24,7 @@ public class CartController {
     }
 
     @PostMapping("/addToCart")
-    public ResponseEntity<Cart> addTocart(@RequestBody ModifyCartRequest request, Authentication authentication) {
+    public ResponseEntity<Cart> addToCart(@RequestBody ModifyCartRequest request, Authentication authentication) {
         if (authentication == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -33,7 +33,7 @@ public class CartController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         Optional<Item> item = itemRepository.findById(request.getItemId());
-        if (!item.isPresent()) {
+        if (item.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         Cart cart = user.getCart();
@@ -44,13 +44,13 @@ public class CartController {
     }
 
     @PostMapping("/removeFromCart")
-    public ResponseEntity<Cart> removeFromcart(@RequestBody ModifyCartRequest request, Authentication authentication) {
+    public ResponseEntity<Cart> removeFromCart(@RequestBody ModifyCartRequest request, Authentication authentication) {
         User user = userRepository.findByUsername(authentication.getName());
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         Optional<Item> item = itemRepository.findById(request.getItemId());
-        if (!item.isPresent()) {
+        if (item.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         Cart cart = user.getCart();
