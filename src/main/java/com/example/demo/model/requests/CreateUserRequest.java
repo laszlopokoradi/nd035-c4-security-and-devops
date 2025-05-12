@@ -12,7 +12,11 @@ public class CreateUserRequest {
 	@JsonProperty
 	private String password;
 
-	public String getUsername() {
+    @JsonProperty()
+    private String repeatedPassword;
+
+
+    public String getUsername() {
 		return username;
 	}
 
@@ -31,6 +35,6 @@ public class CreateUserRequest {
     }
 
     public boolean isPasswordValid() {
-        return password != null && password.matches("[\\w]{7,}");
+        return password != null && password.equals(repeatedPassword) && password.length() >= 8;
     }
 }
