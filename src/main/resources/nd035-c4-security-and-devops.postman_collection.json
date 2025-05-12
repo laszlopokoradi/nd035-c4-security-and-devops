@@ -130,6 +130,32 @@
 			"item": [
 				{
 					"name": "Submit order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is not empty\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"id\");\r",
+									"    pm.expect(jsonData).to.have.property(\"items\");\r",
+									"    pm.expect(jsonData).to.have.property(\"user\");\r",
+									"    pm.expect(jsonData).to.have.property(\"total\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -151,6 +177,36 @@
 				},
 				{
 					"name": "Get orders for user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is not empty\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"    pm.expect(jsonData.length).to.be.greaterThan(0);\r",
+									"\r",
+									"    pm.expect(jsonData[0]).to.have.property(\"id\");\r",
+									"    pm.expect(jsonData[0]).to.have.property(\"items\");\r",
+									"    pm.expect(jsonData[0]).to.have.property(\"user\");\r",
+									"    pm.expect(jsonData[0]).to.have.property(\"total\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -219,7 +275,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"{{username}}\"\r\n}",
+							"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"test1Password\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -264,11 +320,27 @@
 								"type": "text/javascript",
 								"packages": {}
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearerToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}:{{port}}/api/user/id/{{userId}}",
 							"host": [
@@ -327,6 +399,46 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var bearerToken = pm.response.headers.get(\"Authorization\");\r",
+									"pm.collectionVariables.set(\"bearerToken\", bearerToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"test1Password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/login",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
@@ -371,6 +483,11 @@
 		},
 		{
 			"key": "username",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "bearerToken",
 			"value": "",
 			"type": "default"
 		}
