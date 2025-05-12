@@ -20,6 +20,19 @@
         <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <!-- https://mvnrepository.com/artifact/com.konghq/unirest-java-bom -->
+            <dependency>
+                <groupId>com.konghq</groupId>
+                <artifactId>unirest-java-bom</artifactId>
+                <version>4.4.7</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -54,9 +67,16 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.konghq</groupId>
+            <artifactId>unirest-java-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.konghq</groupId>
+            <artifactId>unirest-modules-jackson</artifactId>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/tomcat-maven-plugin -->
-
     </dependencies>
 
     <build>

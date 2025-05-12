@@ -15,7 +15,6 @@ public class CreateUserRequest {
     @JsonProperty()
     private String repeatedPassword;
 
-
     public String getUsername() {
 		return username;
 	}
@@ -31,6 +30,15 @@ public class CreateUserRequest {
 
     public CreateUserRequest setPassword(String password) {
         this.password = password;
+        return this;
+    }
+
+    public String getRepeatedPassword() {
+        return repeatedPassword;
+    }
+
+    public CreateUserRequest setRepeatedPassword(String repeatedPassword) {
+        this.repeatedPassword = repeatedPassword;
         return this;
     }
 

@@ -31,12 +31,12 @@ class CartRepositoryTests {
 
     @BeforeEach
     void setUp() {
-        // Create test user
+        // Create a test user
         user = new User();
         user.setUsername("testUser");
         user.setPassword("password");
 
-        // Create test cart
+        // Create a test cart
         cart = new Cart();
         cart.setUser(user);
         cart.setTotal(new BigDecimal("0.00"));
@@ -45,13 +45,13 @@ class CartRepositoryTests {
         // Link user to cart
         user.setCart(cart);
 
-        // Create test item
+        // Create a test item
         item = new Item();
         item.setName("Test Item");
         item.setPrice(new BigDecimal("19.99"));
         item.setDescription("Test item description");
 
-        // Save entities to in-memory database
+        // Save entities to an in-memory database
         entityManager.persist(item);
         entityManager.persist(cart);
         entityManager.persist(user);
