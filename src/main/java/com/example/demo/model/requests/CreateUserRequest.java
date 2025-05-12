@@ -1,11 +1,13 @@
 package com.example.demo.model.requests;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.fasterxml.jackson.annotation.*;
+
 
 public class CreateUserRequest {
 
-	@JsonProperty
-	private String username;
+    @JsonProperty
+    private String username;
 
 	@JsonProperty
 	private String password;
@@ -14,15 +16,21 @@ public class CreateUserRequest {
 		return username;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public CreateUserRequest setUsername(String username) {
+        this.username = username;
+        return this;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public CreateUserRequest setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public boolean isPasswordValid() {
+        return password != null && password.matches("[\\w]{7,}");
+    }
 }
