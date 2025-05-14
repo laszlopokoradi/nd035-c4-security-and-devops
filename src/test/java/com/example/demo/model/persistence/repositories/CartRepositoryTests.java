@@ -59,7 +59,7 @@ class CartRepositoryTests {
     }
 
     @Test
-    void findByUser_ShouldReturnCart() {
+    void findByUserShouldReturnCart() {
         // When
         Cart foundCart = cartRepository.findByUser(user);
 
@@ -70,7 +70,7 @@ class CartRepositoryTests {
     }
 
     @Test
-    void findByUser_WithNonExistentUser_ShouldReturnNull() {
+    void findByUserWithNonExistentUser_ShouldReturnNull() {
         // Given
         User nonExistentUser = new User();
         nonExistentUser.setUsername("nonExistentUser");
@@ -84,7 +84,7 @@ class CartRepositoryTests {
     }
 
     @Test
-    void save_ShouldPersistCart() {
+    void saveShouldPersistCart() {
         // Given
         Cart newCart = new Cart();
         newCart.setTotal(new BigDecimal("29.99"));
@@ -110,7 +110,7 @@ class CartRepositoryTests {
     }
 
     @Test
-    void findById_ShouldReturnCart() {
+    void findByIdShouldReturnCart() {
         // When
         Optional<Cart> foundCart = cartRepository.findById(cart.getId());
 
@@ -121,7 +121,7 @@ class CartRepositoryTests {
     }
 
     @Test
-    void delete_ShouldRemoveCart() {
+    void deleteShouldRemoveCart() {
         // Given
         Long cartId = cart.getId();
 
@@ -134,7 +134,7 @@ class CartRepositoryTests {
     }
 
     @Test
-    void addItemToCart_ShouldUpdateCartTotal() {
+    void addItemToCartShouldUpdateCartTotal() {
         // Given
         cart.addItem(item);
         cartRepository.save(cart);
@@ -151,7 +151,7 @@ class CartRepositoryTests {
     }
 
     @Test
-    void removeItemFromCart_ShouldUpdateCartTotal() {
+    void removeItemFromCartShouldUpdateCartTotal() {
         // Given
         cart.addItem(item);
         cartRepository.save(cart);

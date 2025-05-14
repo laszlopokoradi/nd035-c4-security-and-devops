@@ -24,7 +24,5 @@ public class ModifyCartRequest {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
-	
 
 }

@@ -54,5 +54,4 @@ public class JWTAuthenticationVerificationFilter
         }
         return null;
     }
-
 }

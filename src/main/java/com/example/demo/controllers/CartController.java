@@ -30,7 +30,7 @@ public class CartController {
         }
         User user = userRepository.findByUsername(authentication.getName());
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         Optional<Item> item = itemRepository.findById(request.getItemId());
         if (item.isEmpty()) {
@@ -45,6 +45,9 @@ public class CartController {
 
     @PostMapping("/removeFromCart")
     public ResponseEntity<Cart> removeFromCart(@RequestBody ModifyCartRequest request, Authentication authentication) {
+        if (authentication == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         User user = userRepository.findByUsername(authentication.getName());
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
