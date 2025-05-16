@@ -39,7 +39,7 @@ class UserControllerTests {
 
         assertThat(createdUser.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(createdUser.getBody()).isNotNull();
-        assertThat(createdUser.getBody().getId()).isNotNull();
+        assertThat(createdUser.getBody().getId()).isNotZero();
         assertThat(createdUser.getBody().getUsername()).isEqualTo("testUser");
     }
 

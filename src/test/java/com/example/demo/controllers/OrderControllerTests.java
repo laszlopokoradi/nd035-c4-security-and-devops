@@ -28,7 +28,6 @@ class OrderControllerTests {
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
     private final CartRepository cartRepository;
-    private final OrderRepository orderRepository;
 
     private User testUser;
     private Item testItem;
@@ -39,14 +38,12 @@ class OrderControllerTests {
                                 CartController cartController,
                                 UserRepository userRepository,
                                 ItemRepository itemRepository,
-                                CartRepository cartRepository,
-                                OrderRepository orderRepository) {
+                                CartRepository cartRepository) {
         this.orderController = orderController;
         this.cartController = cartController;
         this.userRepository = userRepository;
         this.itemRepository = itemRepository;
         this.cartRepository = cartRepository;
-        this.orderRepository = orderRepository;
     }
 
     @BeforeEach
