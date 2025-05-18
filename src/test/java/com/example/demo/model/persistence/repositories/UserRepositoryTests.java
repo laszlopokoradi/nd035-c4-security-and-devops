@@ -1,19 +1,13 @@
 package com.example.demo.model.persistence.repositories;
 
-import com.example.demo.model.persistence.Cart;
-import com.example.demo.model.persistence.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import static org.assertj.core.api.Assertions.*;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import com.example.demo.model.persistence.*;
+import java.math.*;
+import java.util.*;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.test.autoconfigure.orm.jpa.*;
 
 @DataJpaTest
 class UserRepositoryTests {
@@ -31,21 +25,17 @@ class UserRepositoryTests {
 
     @BeforeEach
     void setUp() {
-        // Create a test user
         user = new User();
         user.setUsername("testUser");
         user.setPassword("password123");
 
-        // Create a test cart for the user
         Cart cart = new Cart();
         cart.setUser(user);
-        cart.setTotal(new BigDecimal("0.00"));
+        cart.setTotal(BigDecimal.ZERO);
         cart.setItems(new ArrayList<>());
 
-        // Link user to cart
         user.setCart(cart);
 
-        // Save entities to an in-memory database
         entityManager.persist(cart);
         entityManager.persist(user);
         entityManager.flush();
@@ -53,21 +43,17 @@ class UserRepositoryTests {
 
     @Test
     void findByIdShouldReturnUser() {
-        // When
         Optional<User> foundUser = userRepository.findById(user.getId());
 
-        // Then
-        assertTrue(foundUser.isPresent());
-        assertEquals(user.getId(), foundUser.get().getId());
-        assertEquals("testUser", foundUser.get().getUsername());
+        assertThat(foundUser).isPresent();
+        assertThat(foundUser).get().extracting("id").isEqualTo(user.getId());
+        assertThat(foundUser).get().extracting("username").isEqualTo("testUser");
     }
 
     @Test
     void findByUsernameShouldReturnUser() {
-        // When
         User foundUser = userRepository.findByUsername("testUser");
 
-        // Then
         assertThat(foundUser).isNotNull();
         assertThat(foundUser.getId()).isEqualTo(user.getId());
         assertThat(foundUser.getUsername()).isEqualTo("testUser");
@@ -75,71 +61,59 @@ class UserRepositoryTests {
 
     @Test
     void findByUsernameWithNonExistentUsername_ShouldReturnNull() {
-        // When
         User foundUser = userRepository.findByUsername("nonExistentUser");
 
-        // Then
         assertThat(foundUser).isNull();
     }
 
     @Test
     void saveShouldPersistUser() {
-        // Given
         User newUser = new User();
         newUser.setUsername("newUser");
         newUser.setPassword("newPassword");
 
         Cart newCart = new Cart();
         newCart.setUser(newUser);
-        newCart.setTotal(new BigDecimal("0.00"));
+        newCart.setTotal(BigDecimal.ZERO);
         newCart.setItems(new ArrayList<>());
         newUser.setCart(newCart);
 
-        // When
         User savedUser = userRepository.save(newUser);
 
-        // Then
-        assertNotNull(savedUser.getId());
-        assertEquals("newUser", savedUser.getUsername());
-        assertEquals("newPassword", savedUser.getPassword());
-        assertNotNull(savedUser.getCart());
+        assertThat(savedUser).isNotNull();
+        assertThat(savedUser.getUsername()).isEqualTo("newUser");
+        assertThat(savedUser.getPassword()).isEqualTo("newPassword");
+        assertThat(savedUser.getCart()).isNotNull();
     }
 
     @Test
     void deleteShouldRemoveUser() {
-        // Given
         Long userId = user.getId();
 
-        // When
         userRepository.delete(user);
         Optional<User> deletedUser = userRepository.findById(userId);
 
-        // Then
-        assertFalse(deletedUser.isPresent());
+        assertThat(deletedUser).isNotPresent();
     }
 
     @Test
     void updateUserShouldPersistChanges() {
-        // Given
         user.setUsername("updatedUsername");
         userRepository.save(user);
 
-        // When
         User updatedUser = userRepository.findById(user.getId()).orElse(null);
 
-        // Then
         assertThat(updatedUser).isNotNull();
-        assertEquals("updatedUsername", updatedUser.getUsername());
+        assertThat(updatedUser.getId()).isEqualTo(user.getId());
+        assertThat(updatedUser.getUsername()).isEqualTo("updatedUsername");
     }
 
     @Test
     void userShouldHaveAssociatedCart() {
-        // When
         User foundUser = userRepository.findById(user.getId()).orElse(null);
 
-        // Then
         assertThat(foundUser).isNotNull();
         assertThat(foundUser.getCart()).isNotNull();
-        assertEquals(user.getCart().getId(), foundUser.getCart().getId());
+        assertThat(foundUser.getCart().getId()).isEqualTo(user.getCart().getId());
     }
 }

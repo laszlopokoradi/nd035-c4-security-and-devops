@@ -1,10 +1,14 @@
 package com.example.demo.controllers;
 
 
+import static org.assertj.core.api.Assertions.*;
+
 import com.example.demo.*;
 import com.example.demo.model.persistence.*;
 import com.example.demo.model.persistence.repositories.*;
 import com.example.demo.model.requests.*;
+import java.math.*;
+import java.util.*;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
@@ -12,11 +16,6 @@ import org.springframework.http.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.*;
 import org.springframework.transaction.annotation.*;
-
-import java.math.*;
-import java.util.*;
-
-import static org.assertj.core.api.Assertions.*;
 
 
 @SpringBootTest(classes = EcommerceApplication.class)
@@ -33,9 +32,9 @@ class CartControllerTests {
 
     @Autowired
     public CartControllerTests(CartController cartController,
-                               UserRepository userRepository,
-                               ItemRepository itemRepository,
-                               CartRepository cartRepository) {
+            UserRepository userRepository,
+            ItemRepository itemRepository,
+            CartRepository cartRepository) {
         this.cartController = cartController;
         this.userRepository = userRepository;
         this.itemRepository = itemRepository;
@@ -60,7 +59,7 @@ class CartControllerTests {
         testItem = new Item();
         testItem.setName("Test Item");
         testItem.setDescription("Test item description");
-        testItem.setPrice(new BigDecimal("10.00"));
+        testItem.setPrice(BigDecimal.valueOf(10.00));
         itemRepository.save(testItem);
 
         // Mock authentication
@@ -88,7 +87,7 @@ class CartControllerTests {
                            .getItems()).allMatch(item -> item.getId()
                                                              .equals(testItem.getId()));
         assertThat(response.getBody()
-                           .getTotal()).isEqualByComparingTo(new BigDecimal("20.00"));
+                           .getTotal()).isEqualByComparingTo(BigDecimal.valueOf(20.00));
     }
 
     @Test
@@ -108,7 +107,8 @@ class CartControllerTests {
         request.setItemId(testItem.getId());
         request.setQuantity(2);
 
-        Authentication invalidAuth = new UsernamePasswordAuthenticationToken("nonExistentUser", null, Collections.emptyList());
+        Authentication invalidAuth = new UsernamePasswordAuthenticationToken("nonExistentUser", null,
+                Collections.emptyList());
 
         ResponseEntity<Cart> response = cartController.addToCart(request, invalidAuth);
 
@@ -145,7 +145,7 @@ class CartControllerTests {
         assertThat(response.getBody()
                            .getItems()).hasSize(1);
         assertThat(response.getBody()
-                           .getTotal()).isEqualByComparingTo(new BigDecimal("10.00"));
+                           .getTotal()).isEqualByComparingTo(BigDecimal.valueOf(10.00));
     }
 
     @Test
@@ -165,7 +165,8 @@ class CartControllerTests {
         request.setItemId(testItem.getId());
         request.setQuantity(1);
 
-        Authentication invalidAuth = new UsernamePasswordAuthenticationToken("nonExistentUser", null, Collections.emptyList());
+        Authentication invalidAuth = new UsernamePasswordAuthenticationToken("nonExistentUser", null,
+                Collections.emptyList());
 
         ResponseEntity<Cart> response = cartController.removeFromCart(request, invalidAuth);
 
@@ -196,6 +197,6 @@ class CartControllerTests {
         assertThat(response.getBody()
                            .getItems()).isEmpty();
         assertThat(response.getBody()
-                           .getTotal()).isEqualByComparingTo(new BigDecimal("0.00"));
+                           .getTotal()).isEqualByComparingTo(BigDecimal.ZERO);
     }
 }

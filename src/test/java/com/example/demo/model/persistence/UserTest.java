@@ -1,9 +1,9 @@
 package com.example.demo.model.persistence;
 
 
-import org.junit.jupiter.api.*;
-
 import static org.assertj.core.api.Assertions.*;
+
+import org.junit.jupiter.api.*;
 
 
 class UserTest {

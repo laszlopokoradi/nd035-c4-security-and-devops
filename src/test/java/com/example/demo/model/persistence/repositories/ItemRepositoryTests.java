@@ -28,23 +28,19 @@ class ItemRepositoryTests {
 
     @BeforeEach
     void setUp() {
-        // Create a test item
         item = new Item();
         item.setName("Test Item");
-        item.setPrice(new BigDecimal("19.99"));
+        item.setPrice(BigDecimal.valueOf(19.99));
         item.setDescription("Test item description");
 
-        // Save the item to the in-memory database
         entityManager.persist(item);
         entityManager.flush();
     }
 
     @Test
     void findByIdShouldReturnItem() {
-        // When
         Optional<Item> foundItem = itemRepository.findById(item.getId());
 
-        // Then
         assertThat(foundItem).isPresent();
         assertThat(foundItem.get()
                             .getId()).isEqualTo(item.getId());
@@ -52,10 +48,8 @@ class ItemRepositoryTests {
 
     @Test
     void findByNameShouldReturnItems() {
-        // When
         List<Item> foundItems = itemRepository.findByName("Test Item");
 
-        // Then
         assertThat(foundItems).isNotEmpty();
         assertThat(foundItems.getFirst()
                              .getName()).isEqualTo(item.getName());
@@ -63,30 +57,24 @@ class ItemRepositoryTests {
 
     @Test
     void saveShouldPersistItem() {
-        // Given
         Item newItem = new Item();
         newItem.setName("New Item");
-        newItem.setPrice(new BigDecimal("29.99"));
+        newItem.setPrice(BigDecimal.valueOf(29.99));
         newItem.setDescription("New item description");
 
-        // When
         Item savedItem = itemRepository.save(newItem);
 
-        // Then
         assertThat(savedItem.getId()).isNotNull();
         assertThat(savedItem.getName()).isEqualTo("New Item");
     }
 
     @Test
     void deleteShouldRemoveItem() {
-        // Given
         Long itemId = item.getId();
 
-        // When
         itemRepository.delete(item);
         Optional<Item> deletedItem = itemRepository.findById(itemId);
 
-        // Then
         assertThat(deletedItem).isNotPresent();
     }
 }

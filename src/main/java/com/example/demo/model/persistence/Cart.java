@@ -76,7 +76,7 @@ public class Cart {
 		}
 		items.add(item);
 		if(total == null) {
-			total = new BigDecimal(0);
+			total = BigDecimal.ZERO;
 		}
 		total = total.add(item.getPrice());
 	}
@@ -87,7 +87,7 @@ public class Cart {
 		}
 
 		if(total == null) {
-			total = new BigDecimal(0);
+			total = BigDecimal.ZERO;
 		}
 
 		if (items.remove(item)) {
