@@ -108,9 +108,7 @@ class UserOrderTest {
     void testCreateFromCartWithNullProperties() {
         Cart emptyCart = new Cart();
 
-        Throwable thrown = catchThrowable(() -> {
-            com.example.demo.model.persistence.UserOrder.createFromCart(emptyCart);
-        });
+        Throwable thrown = catchThrowable(() -> UserOrder.createFromCart(emptyCart));
 
         assertThat(thrown).isInstanceOf(NullPointerException.class)
                           .hasMessageContaining(

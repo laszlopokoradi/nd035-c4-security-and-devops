@@ -62,7 +62,6 @@ class CartControllerTests {
         testItem.setPrice(BigDecimal.valueOf(10.00));
         itemRepository.save(testItem);
 
-        // Mock authentication
         authentication = new UsernamePasswordAuthenticationToken(testUser.getUsername(), null, Collections.emptyList());
     }
 
