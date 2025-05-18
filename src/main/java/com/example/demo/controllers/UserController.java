@@ -4,7 +4,6 @@ package com.example.demo.controllers;
 import com.example.demo.model.persistence.*;
 import com.example.demo.model.persistence.repositories.*;
 import com.example.demo.model.requests.*;
-import java.sql.*;
 import org.springframework.http.*;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.web.bind.annotation.*;
