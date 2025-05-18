@@ -4,6 +4,7 @@ package com.example.demo.controllers;
 import com.example.demo.model.persistence.*;
 import com.example.demo.model.persistence.repositories.*;
 import java.util.*;
+import org.slf4j.*;
 import org.springframework.http.*;
 import org.springframework.security.core.*;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ public class OrderController {
 
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
     public OrderController(UserRepository userRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
@@ -23,6 +25,7 @@ public class OrderController {
 
     @PostMapping("/submit")
     public ResponseEntity<UserOrder> submit(Authentication authentication) {
+        LOGGER.atDebug().log(() -> "OrderController.submit() called");
         if (authentication == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -37,6 +40,7 @@ public class OrderController {
 
     @GetMapping("/history")
     public ResponseEntity<List<UserOrder>> getOrdersForUser(Authentication authentication) {
+        LOGGER.atDebug().log(() -> "OrderController.getOrdersForUser() called");
         if (authentication == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
