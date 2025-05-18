@@ -46,8 +46,17 @@ public class UserController {
         }
         user.setPassword(bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
 
+        try {
+            user = userRepository.save(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                                 .build();
+        }
+
         Cart cart = new Cart();
+        cart.setUser(user);
         cartRepository.save(cart);
+
         user.setCart(cart);
 
         try {

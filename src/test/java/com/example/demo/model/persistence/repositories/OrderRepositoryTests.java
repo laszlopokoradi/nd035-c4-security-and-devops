@@ -1,14 +1,13 @@
 package com.example.demo.model.persistence.repositories;
 
+import static org.assertj.core.api.Assertions.*;
+
 import com.example.demo.model.persistence.*;
+import java.math.*;
+import java.util.*;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.autoconfigure.orm.jpa.*;
-
-import java.math.*;
-import java.util.*;
-
-import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 class OrderRepositoryTests {
@@ -28,24 +27,20 @@ class OrderRepositoryTests {
 
     @BeforeEach
     void setUp() {
-        // Create test user
         user = new User();
         user.setUsername("orderUser");
         user.setPassword("password");
 
-        // Create test item
         item = new Item();
         item.setName("Order Item");
-        item.setPrice(new BigDecimal("10.00"));
+        item.setPrice(BigDecimal.valueOf(10.00));
         item.setDescription("Order item description");
 
-        // Create test order
         order = new UserOrder();
         order.setUser(user);
         order.setItems(List.of(item));
         order.setTotal(item.getPrice());
 
-        // Persist entities
         entityManager.persist(item);
         entityManager.persist(user);
         entityManager.persist(order);
@@ -73,7 +68,7 @@ class OrderRepositoryTests {
         UserOrder newOrder = new UserOrder();
         newOrder.setUser(user);
         newOrder.setItems(List.of(item));
-        newOrder.setTotal(new BigDecimal("20.00"));
+        newOrder.setTotal(BigDecimal.valueOf(20.00));
 
         UserOrder savedOrder = orderRepository.save(newOrder);
 

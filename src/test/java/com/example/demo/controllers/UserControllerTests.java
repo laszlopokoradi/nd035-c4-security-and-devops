@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
 
+import static org.assertj.core.api.Assertions.*;
+
 import com.example.demo.*;
 import com.example.demo.model.persistence.*;
 import com.example.demo.model.requests.*;
@@ -10,12 +12,11 @@ import org.springframework.boot.test.context.*;
 import org.springframework.http.*;
 import org.springframework.transaction.annotation.*;
 
-import static org.assertj.core.api.Assertions.*;
-
 
 @SpringBootTest(classes = EcommerceApplication.class)
 @Transactional
 class UserControllerTests {
+
     private final UserController userController;
 
     @Autowired
