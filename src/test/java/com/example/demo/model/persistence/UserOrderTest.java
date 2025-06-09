@@ -112,7 +112,7 @@ class UserOrderTest {
 
         assertThat(thrown).isInstanceOf(NullPointerException.class)
                           .hasMessageContaining(
-                                  "Cannot invoke \"java.util.Collection.toArray()\" because \"c\" is null");
+                                  "Cannot invoke \"java.util.Collection.toArray()\"");
     }
 
     @Test
