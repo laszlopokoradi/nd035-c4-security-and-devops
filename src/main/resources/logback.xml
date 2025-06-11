@@ -9,7 +9,7 @@
     </appender>
     <appender name="SPLUNK" class="com.splunk.logging.HttpEventCollectorLogbackAppender">
         <url>https://127.0.0.1:8088</url>
-        <token>50e32271-cb52-438e-b442-1882d0ed0505</token>
+        <token>SPLUNK_TOKEN</token>
         <index>main</index>
         <batch_size_count>50</batch_size_count>
         <source>nd035-c4-security-and-devops</source>
