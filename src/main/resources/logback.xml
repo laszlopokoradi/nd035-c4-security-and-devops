@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="SPLUNK" class="com.splunk.logging.HttpEventCollectorLogbackAppender">
+        <url>https://127.0.0.1:8088</url>
+        <token>50e32271-cb52-438e-b442-1882d0ed0505</token>
+        <index>main</index>
+        <batch_size_count>50</batch_size_count>
+        <source>nd035-c4-security-and-devops</source>
+        <messageFormat>text</messageFormat>
+        <connectTimeout>5000</connectTimeout>
+        <terminationTimeout>2000</terminationTimeout>
+        <disableCertificateValidation>true</disableCertificateValidation>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+<!--            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n</pattern>-->
+            <pattern>%msg</pattern>
+        </layout>
+    </appender>
+
+
+    <root level="INFO">
+        <appender-ref ref="SPLUNK"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

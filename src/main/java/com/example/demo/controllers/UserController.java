@@ -42,6 +42,7 @@ public class UserController {
     @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody CreateUserRequest createUserRequest) {
         LOGGER.atDebug().log(() -> "UserController.createUser() called");
+        LOGGER.info("Creating user with username: {}", createUserRequest.getUsername());
         User user = new User();
         user.setUsername(createUserRequest.getUsername());
 

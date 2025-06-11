@@ -1,22 +1,25 @@
 package com.example.demo.controllers;
 
 
-import static org.assertj.core.api.Assertions.*;
-
 import com.example.demo.*;
 import com.example.demo.model.persistence.*;
 import com.example.demo.model.requests.*;
 import org.junit.jupiter.api.*;
+import org.slf4j.*;
+import com.splunk.logging.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.http.*;
 import org.springframework.transaction.annotation.*;
+
+import static org.assertj.core.api.Assertions.*;
 
 
 @SpringBootTest(classes = EcommerceApplication.class)
 @Transactional
 class UserControllerTests {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserControllerTests.class);
     private final UserController userController;
 
     @Autowired
@@ -26,7 +29,10 @@ class UserControllerTests {
 
     @Test
     void contextLoads() {
-        // This test will pass if the application context loads successfully.
+        LOGGER.debug("[DEBUG_LOG] Testing debug log level");
+        LOGGER.info("[INFO_LOG] Testing info log level");
+        LOGGER.warn("[WARN_LOG] Testing warn log level");
+        LOGGER.error("[ERROR_LOG] Testing error log level");
     }
 
     @Test
@@ -40,8 +46,10 @@ class UserControllerTests {
 
         assertThat(createdUser.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(createdUser.getBody()).isNotNull();
-        assertThat(createdUser.getBody().getId()).isNotZero();
-        assertThat(createdUser.getBody().getUsername()).isEqualTo("testUser");
+        assertThat(createdUser.getBody()
+                              .getId()).isNotZero();
+        assertThat(createdUser.getBody()
+                              .getUsername()).isEqualTo("testUser");
     }
 
     @Test
@@ -93,12 +101,13 @@ class UserControllerTests {
         assertThat(createdUser.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(createdUser.getBody()).isNotNull();
 
-        Long userId = createdUser.getBody().getId();
+        Long userId = createdUser.getBody()
+                                 .getId();
 
         ResponseEntity<User> retrievedUser = userController.findById(userId);
         assertThat(retrievedUser.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(retrievedUser.getBody()).isNotNull();
-        assertThat(retrievedUser.getBody().getUsername()).isEqualTo("testUser");
+        assertThat(retrievedUser.getBody()
+                                .getUsername()).isEqualTo("testUser");
     }
 }
-
