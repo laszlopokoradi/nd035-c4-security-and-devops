@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.security.servlet.*;
 import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.*;
 import org.springframework.security.crypto.bcrypt.*;
+import org.springframework.security.crypto.password.*;
 
 
 @EnableJpaRepositories("com.example.demo.model.persistence.repositories")
@@ -20,7 +21,7 @@ public class EcommerceApplication {
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

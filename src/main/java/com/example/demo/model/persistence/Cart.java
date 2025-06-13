@@ -1,97 +1,90 @@
 package com.example.demo.model.persistence;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import java.math.*;
+import java.util.*;
+
 
 @Entity
 @Table(name = "carts")
 public class Cart {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonProperty
-	@Column
-	private Long id;
-	
-	@ManyToMany
-	@JsonProperty
-	@Column
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
+    @Column
+    private Long id;
+
+    @ManyToMany
+    @JsonProperty
+    @Column
     private List<Item> items;
-	
-	@OneToOne(mappedBy = "cart")
-	@JsonProperty
+
+    @OneToOne(mappedBy = "cart")
+    @JsonProperty
     private User user;
-	
-	@Column
-	@JsonProperty
-	private BigDecimal total;
-	
-	public BigDecimal getTotal() {
-		return total;
-	}
 
-	public void setTotal(BigDecimal total) {
-		this.total = total;
-	}
+    @Column
+    @JsonProperty
+    private BigDecimal total;
 
-	public User getUser() {
-		return user;
-	}
+    public BigDecimal getTotal() {
+        return total;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public List<Item> getItems() {
-		return items;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setItems(List<Item> items) {
-		this.items = items;
-	}
-	
-	public void addItem(Item item) {
-		if(items == null) {
-			items = new ArrayList<>();
-		}
-		items.add(item);
-		if(total == null) {
-			total = BigDecimal.ZERO;
-		}
-		total = total.add(item.getPrice());
-	}
-	
-	public void removeItem(Item item) {
-		if(items == null) {
-			items = new ArrayList<>();
-		}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-		if(total == null) {
-			total = BigDecimal.ZERO;
-		}
+    public List<Item> getItems() {
+        return items;
+    }
 
-		if (items.remove(item)) {
-			total = total.subtract(item.getPrice());
-		}
-	}
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public void addItem(Item item) {
+        if (items == null) {
+            items = new ArrayList<>();
+        }
+        items.add(item);
+        if (total == null) {
+            total = BigDecimal.ZERO;
+        }
+        total = total.add(item.getPrice());
+    }
+
+    public void removeItem(Item item) {
+        if (items == null) {
+            items = new ArrayList<>();
+        }
+
+        if (total == null) {
+            total = BigDecimal.ZERO;
+        }
+
+        if (items.remove(item)) {
+            total = total.subtract(item.getPrice());
+        }
+    }
 }

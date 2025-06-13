@@ -20,21 +20,21 @@ public class ItemController {
         this.itemRepository = itemRepository;
     }
 
-    @GetMapping
+    @GetMapping({"", "/"})
     public ResponseEntity<List<Item>> getItems() {
-        LOGGER.atDebug().log(() -> "ItemController.getItems() called");
+        LOGGER.atDebug().setMessage(() -> "ItemController.getItems() called").log();
         return ResponseEntity.ok(itemRepository.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Item> getItemById(@PathVariable Long id) {
-        LOGGER.atDebug().log(() -> "ItemController.getItemById() called");
+        LOGGER.atDebug().setMessage(() -> "ItemController.getItemById() called").log();
         return ResponseEntity.of(itemRepository.findById(id));
     }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<List<Item>> getItemsByName(@PathVariable String name) {
-        LOGGER.atDebug().log(() -> "ItemController.getItemsByName() called");
+        LOGGER.atDebug().setMessage(() -> "ItemController.getItemsByName() called").log();
         List<Item> items = itemRepository.findByName(name);
 
         return items == null || items.isEmpty() ? ResponseEntity.notFound()

@@ -1,28 +1,30 @@
 package com.example.demo.model.requests;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.fasterxml.jackson.annotation.*;
+
 
 public class ModifyCartRequest {
-	@JsonProperty
-	private long itemId;
-	
-	@JsonProperty
-	private int quantity;
+    @JsonProperty
+    private long itemId;
 
-	public long getItemId() {
-		return itemId;
-	}
+    @JsonProperty
+    private int quantity;
 
-	public void setItemId(long itemId) {
-		this.itemId = itemId;
-	}
+    public long getItemId() {
+        return itemId;
+    }
 
-	public int getQuantity() {
-		return quantity;
-	}
+    public void setItemId(long itemId) {
+        this.itemId = itemId;
+    }
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
 }

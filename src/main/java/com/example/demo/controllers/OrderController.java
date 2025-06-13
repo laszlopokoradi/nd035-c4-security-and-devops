@@ -3,11 +3,12 @@ package com.example.demo.controllers;
 
 import com.example.demo.model.persistence.*;
 import com.example.demo.model.persistence.repositories.*;
-import java.util.*;
 import org.slf4j.*;
 import org.springframework.http.*;
 import org.springframework.security.core.*;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
 
 
 @RestController
@@ -25,13 +26,22 @@ public class OrderController {
 
     @PostMapping("/submit")
     public ResponseEntity<UserOrder> submit(Authentication authentication) {
-        LOGGER.atDebug().log(() -> "OrderController.submit() called");
+        LOGGER.atDebug()
+              .log(() -> "OrderController.submit() called");
         if (authentication == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            LOGGER.atWarn()
+                  .setMessage(() -> "No authentication found in request \"submit\"")
+                  .log();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                                 .build();
         }
         User user = userRepository.findByUsername(authentication.getName());
         if (user == null) {
-            return ResponseEntity.notFound().build();
+            LOGGER.atWarn()
+                  .setMessage(() -> "User not found in request to \"submit\"")
+                  .log();
+            return ResponseEntity.notFound()
+                                 .build();
         }
         UserOrder order = UserOrder.createFromCart(user.getCart());
         orderRepository.save(order);
@@ -40,13 +50,22 @@ public class OrderController {
 
     @GetMapping("/history")
     public ResponseEntity<List<UserOrder>> getOrdersForUser(Authentication authentication) {
-        LOGGER.atDebug().log(() -> "OrderController.getOrdersForUser() called");
+        LOGGER.atDebug()
+              .log(() -> "OrderController.getOrdersForUser() called");
         if (authentication == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            LOGGER.atWarn()
+                  .setMessage(() -> "No authentication found in request \"getOrdersForUser\"")
+                  .log();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                                 .build();
         }
         User user = userRepository.findByUsername(authentication.getName());
         if (user == null) {
-            return ResponseEntity.notFound().build();
+            LOGGER.atWarn()
+                  .setMessage(() -> "User not found in request to \"getOrdersForUser\"")
+                  .log();
+            return ResponseEntity.notFound()
+                                 .build();
         }
 
         return ResponseEntity.ok(orderRepository.findByUser(user));

@@ -1,7 +1,6 @@
 package com.example.demo.security;
 
 
-import com.example.demo.model.persistence.*;
 import com.example.demo.model.persistence.User;
 import com.example.demo.model.persistence.repositories.*;
 import org.springframework.security.core.userdetails.*;

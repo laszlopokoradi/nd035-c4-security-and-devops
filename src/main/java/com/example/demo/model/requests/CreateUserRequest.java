@@ -9,15 +9,15 @@ public class CreateUserRequest {
     @JsonProperty
     private String username;
 
-	@JsonProperty
-	private String password;
+    @JsonProperty
+    private String password;
 
     @JsonProperty()
     private String repeatedPassword;
 
     public String getUsername() {
-		return username;
-	}
+        return username;
+    }
 
     public CreateUserRequest setUsername(String username) {
         this.username = username;

@@ -27,13 +27,17 @@ public class UserController {
 
     @GetMapping("/id/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
-        LOGGER.atDebug().log(() -> "UserController.findById() called");
+        LOGGER.atDebug()
+              .setMessage(() -> "UserController.findById() called")
+              .log();
         return ResponseEntity.of(userRepository.findById(id));
     }
 
     @GetMapping("/{username}")
     public ResponseEntity<User> findByUserName(@PathVariable String username) {
-        LOGGER.atDebug().log(() -> "UserController.findByUserName() called");
+        LOGGER.atDebug()
+              .setMessage(() -> "UserController.findByUserName() called")
+              .log();
         User user = userRepository.findByUsername(username);
         return user == null ? ResponseEntity.notFound()
                                             .build() : ResponseEntity.ok(user);
@@ -41,8 +45,12 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody CreateUserRequest createUserRequest) {
-        LOGGER.atDebug().log(() -> "UserController.createUser() called");
-        LOGGER.info("Creating user with username: {}", createUserRequest.getUsername());
+        LOGGER.atDebug()
+              .log(() -> "UserController.createUser() called");
+        LOGGER.atInfo()
+              .setMessage(() -> "Creating user with username: {}")
+              .addArgument(createUserRequest.getUsername())
+              .log();
         User user = new User();
         user.setUsername(createUserRequest.getUsername());
 
@@ -55,6 +63,7 @@ public class UserController {
         try {
             user = userRepository.save(user);
         } catch (Exception e) {
+            LOGGER.atError().setMessage(() -> "Error creating user: " + e.getMessage()).log();
             return ResponseEntity.status(HttpStatus.CONFLICT)
                                  .build();
         }
@@ -68,11 +77,11 @@ public class UserController {
         try {
             user = userRepository.save(user);
         } catch (Exception e) {
+            LOGGER.atError().setMessage(() -> "Error creating user: " + e.getMessage()).log();
             return ResponseEntity.status(HttpStatus.CONFLICT)
                                  .build();
         }
         return ResponseEntity.status(HttpStatus.CREATED)
                              .body(user);
     }
-
 }
